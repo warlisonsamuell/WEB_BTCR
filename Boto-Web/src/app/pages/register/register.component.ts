@@ -8,9 +8,10 @@ import {NgToastService} from 'ng-angular-popup'
 
 declare global {
   interface Window {
-    handleGlobalText: () => any;
+    handleGlobalText: () => any
   }
 }
+
 
 @Component({
   selector: 'app-register',
@@ -32,18 +33,18 @@ export class RegisterComponent {
   }
 
   uploadData() {
-    if(!this.file || !this.nome.value){
-      console.log("file",this.file)
-      console.log("nome",this.nome.value)
-      return this.toast.error({detail:"Error message", summary:"Name or pdf invalid", duration:3000})
-    }
     setTimeout(() => {
       window.handleGlobalText().then((resp: any) => {
+        if(!resp || !this.nome.value){
+          console.log("file",this.file)
+          console.log("nome",this.nome.value)
+          return this.toast.error({detail:"Error message", summary:"Nome ou PDF inválido", duration:3000})
+        }
         this.apiService.post({
           nome: this.nome.value ?? '',
           fullText: resp,
         }),
-        this.toast.success({detail:"Success message", summary:"Success", duration:3000})
+        this.toast.success({detail:"Success message", summary:"PDF cadastrado com sucesso", duration:3000})
       });
     }, 5000);
   }
