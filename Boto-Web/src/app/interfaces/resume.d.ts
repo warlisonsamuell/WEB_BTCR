@@ -10,5 +10,5 @@ interface Resume {
   ensinomedio: '1' | '0';
   posgraduacao: '1' | '0';
   mestrado: '1' | '0';
-  doutourado: '1' | '0';
+  doutorado: '1' | '0';
 }

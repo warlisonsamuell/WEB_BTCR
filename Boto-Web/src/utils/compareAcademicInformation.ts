@@ -1,5 +1,5 @@
 export function compareAcademicInformation(resume: Resume): string {
-  if (resume.doutourado === '1') {
+  if (resume.doutorado === '1') {
     return 'Doutourado';
   } else if (resume.mestrado === '1') {
     return 'Mestrado';

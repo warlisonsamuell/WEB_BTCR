@@ -47,33 +47,34 @@
         <div class="mt-2">
           <h2 class="text-gray-900">Tempo de experiência</h2>
 
-          <ul class="w-48 text-sm font-medium text-gray-900 bg-white">
-            <li *ngFor="let option of timeFilter" class="w-full">
-              <div class="flex items-center ps-3">
-                <input id="time" type="radio" value="" name="radio-time"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="time" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.option}}</label>
-              </div>
-            </li>
-          </ul>
+          <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
+            <div *ngFor="let option of timeFilter" class="flex items-center ps-3">
+              <input formControlName="tempoExp" type="radio" value="{{option.option}}" name="tempoExp"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+              <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
+            </div>
+          </form>
         </div>
 
         <div class="mt-2">
           <h2 class="text-gray-900">Escolaridade</h2>
 
-          <ul class="w-48 text-sm font-medium text-gray-900 bg-white">
-            <li *ngFor="let option of educationFilter" class="w-full">
-              <div class="flex items-center ps-3">
-                <input id="education" type="radio" value="" name="radio-education"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="education"
-                  class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.option}}</label>
-              </div>
-            </li>
-          </ul>
+          <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
+            <div *ngFor="let option of educationFilter" class="flex items-center ps-3">
+              <input formControlName="escolaridade" type="radio" value="{{option.option}}" name="escolaridade"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+              <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
+            </div>
+          </form>
         </div>
 
-        <button type="submit"
+        <!-- <form >
+          <input type="radio" formControlName="food" value="beef" /> Beef
+          <input type="radio" formControlName="food" value="lamb" /> Lamb
+          <input type="radio" formControlName="food" value="fish" /> Fish
+        </form> -->
+
+        <button (click)="filterResumes()"
           class="mt-2 ml-auto rounded-md bg-indigo-600 px-5 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Filtrar
         </button>

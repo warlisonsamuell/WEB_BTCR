@@ -135,7 +135,8 @@ class PeopleController {
 
   create(request, response) {
     const { nome, fullText } = request.body;
-    const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn} = extractText(fullText);
+    const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn } =
+      extractText(fullText);
     const query = `INSERT INTO pessoa (nome, email, linkedin, tempo, ensinomedio, ensinosuperior, posgraduacao, mestrado, doutorado) 
     VALUES ('${nome}', '${email_verificado}', '${link_linkedIn}', '${tempo_experiencia}', '${escolaridade.ensinoMedio}', '${escolaridade.ensinoSuperior}',
     '${escolaridade.posGraduacao}', '${escolaridade.mestrado}', '${escolaridade.doutorado}')`;
@@ -149,6 +150,5 @@ class PeopleController {
     return response.json('ok');
   }
 }
-
 
 module.exports = PeopleController;
