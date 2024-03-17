@@ -3,6 +3,8 @@ import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { AxiosService } from '../../../libs/axios.service';
 import { GetTextFromPDF } from '../../../utils/extractTextFromPDF';
+import {NgToastService} from 'ng-angular-popup'
+
 
 declare global {
   interface Window {
@@ -22,7 +24,7 @@ export class RegisterComponent {
   fullText = '';
   file: FileList | null = null;
 
-  constructor(private apiService: AxiosService) {}
+  constructor(private apiService: AxiosService, private toast: NgToastService) {}
 
   updateFile(event: any) {
     const file: FileList = event.target.files[0];
@@ -30,12 +32,18 @@ export class RegisterComponent {
   }
 
   uploadData() {
+    if( !this.nome.value){
+      console.log("file",this.file)
+      console.log("nome",this.nome.value)
+      return this.toast.error({detail:"Error message", summary:"Name or pdf invalid", duration:3000})
+    }
     setTimeout(() => {
       window.handleGlobalText().then((resp: any) => {
         this.apiService.post({
           nome: this.nome.value ?? '',
           fullText: resp,
-        });
+        }),
+        this.toast.success({detail:"Success message", summary:"Success", duration:3000})
       });
     }, 5000);
   }
