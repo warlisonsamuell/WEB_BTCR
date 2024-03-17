@@ -4,47 +4,67 @@ import { AxiosService } from '../../../libs/axios.service';
 
 import { transformMonthsInYears } from '../../../utils/transformMonthsInYears';
 import { compareAcademicInformation } from '../../../utils/compareAcademicInformation';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-resumes',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, ReactiveFormsModule, FormsModule],
   templateUrl: './resumes.component.html',
   styleUrl: './resumes.component.css',
 })
 export class ResumesComponent {
   timeFilter = [
     {
-      option: '0 a 1 ano',
+      name: '0 a 1 ano',
+      option: '12',
     },
     {
-      option: '1 a 3 ano',
+      name: '1 a 3 ano',
+      option: '36',
     },
     {
-      option: '3 a 5 ano',
+      name: '3 a 5 ano',
+      option: '60',
     },
     {
-      option: 'A partir de 5 anos',
+      name: 'A partir de 5 anos',
+      option: '61',
     },
   ];
   educationFilter = [
     {
-      option: 'Ensino médio',
+      name: 'Ensino médio',
+      option: 'ensinomedio',
     },
     {
-      option: 'Ensino superior',
+      name: 'Ensino superior',
+      option: 'ensinosuperior',
     },
     {
-      option: 'Pós graduação',
+      name: 'Pós graduação',
+      option: 'posgraduacao',
     },
     {
-      option: 'Mestrado',
+      name: 'Mestrado',
+      option: 'mestrado',
     },
     {
-      option: 'Doutorado',
+      name: 'Doutorado',
+      option: 'doutorado',
     },
   ];
   resumes: Resume[] = [];
+
+  form = new FormGroup({
+    tempoExp: new FormControl(''),
+    escolaridade: new FormControl(''),
+  });
 
   constructor(private apiService: AxiosService) {}
 
@@ -59,6 +79,16 @@ export class ResumesComponent {
 
   ngOnInit(): void {
     this.getResumes();
+  }
+
+  filterResumes(): void {
+    this.apiService
+      .getCompleteResume(this.form.value)
+      .then((response) => {
+        console.log(response);
+        this.resumes = response.data;
+      })
+      .catch((error) => {});
   }
 
   transformMonthsInYears(time: number): string {

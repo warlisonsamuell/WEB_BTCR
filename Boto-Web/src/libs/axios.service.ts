@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import api from './axios';
 
+interface Parametros {
+  tempoExp: string;
+  escolaridade: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,12 +16,11 @@ export class AxiosService {
     return api.get('/pessoa');
   }
 
-  getCompleteResume() {
-    return api.get('/completeResume');
+  getCompleteResume(params?: any) {
+    return api.get('/pessoa', { params });
   }
 
   post(data: { nome: string; fullText: string }) {
-    console.log('data', data);
     return api.post('/pessoa', data);
   }
 }
