@@ -32,7 +32,7 @@ export class RegisterComponent {
   }
 
   uploadData() {
-    if( !this.nome.value){
+    if(!this.file || !this.nome.value){
       console.log("file",this.file)
       console.log("nome",this.nome.value)
       return this.toast.error({detail:"Error message", summary:"Name or pdf invalid", duration:3000})
