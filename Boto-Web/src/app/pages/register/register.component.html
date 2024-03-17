@@ -1,0 +1,98 @@
+<div class="h-full flex justify-center">
+  <div class="h-full w-full flex items-center max-w-7xl px-6 py-14 lg:py-16">
+    <div class="w-full flex flex-row justify-center items-center gap-8 mx-auto lg:mx-0  lg:max-w-7xl">
+      <div class="hidden lg:block">
+        <img src="../../assets/resume-bro.svg" alt="resume" class="w-[500px] h-[500px]" />
+      </div>
+
+      <div>
+        <form class=" rounded-2xl p-8 bg-white">
+          <div>
+            <div class="border-b border-gray-900/10 pb-12">
+              <h1 class="text-center text-2xl font-bold leading-7 text-gray-900">Cadastre seu currículo</h1>
+
+              <!-- Input De Nome -->
+              <div class="pb-4">
+                <div class="mt-6 w-[350px]">
+                  <div class="sm:col-span-3">
+                    <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Nome
+                      Completo*</label>
+                    <div class="mt-2">
+                      <input type="text" [formControl]="nome" autocomplete="given-name"
+                        class="block w-full rounded-md border-0 p-3 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input De Arquivo -->
+              <div class="w-[350px]">
+                <div class="col-span-full">
+                  <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Currículo</label>
+                  <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <div class="text-center">
+                      <img src="../../assets/pdf.svg" alt="" class="mx-auto h-12 w-12 text-gray-300">
+                      <!-- <div class="mt-4 flex text-sm leading-6 text-gray-600"> -->
+                      <div class="mt-4 flex text-sm leading-6 text-gray-600 relative">
+                        <label for="file-upload"
+                          class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600"
+                          ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                          <span>Upload the file</span>
+
+                          <input type="file" id="pdfFileInput" accept=".pdf" style="background-color: transparent;"><br>
+
+                          <input id="file-upload" name="file-upload" type="file" class="sr-only"
+                            style="background-color: blue;">
+                          <script>
+                            function dropHandler(ev) {
+                              console.log("File(s) dropped");
+
+                              // Impedir o comportamento padrão (impedir que o arquivo seja aberto)
+                              ev.preventDefault();
+
+                              if (ev.dataTransfer.items) {
+                                // Use a interface DataTransferItemList para acessar o (s) arquivo (s)
+                                for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+                                  // Se os itens soltos não forem arquivos, rejeite-os
+                                  if (ev.dataTransfer.items[i].kind === "file") {
+                                    var file = ev.dataTransfer.items[i].getAsFile();
+                                    console.log("... file[" + i + "].name = " + file.name);
+                                  }
+                                }
+                              } else {
+                                // interface DataTransfer para acessar o (s) arquivo (s)
+                                for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+                                  console.log(
+                                    "... file[" + i + "].name = " + ev.dataTransfer.files[i].name,
+                                  );
+                                }
+                              }
+                            }
+
+                            function dragOverHandler(ev) {
+                              console.log("File(s) in drop zone");
+
+                              ev.preventDefault();
+                            }
+
+                          </script>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button (click)="uploadData()" type="submit" id="extractButton"
+              class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Salvar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

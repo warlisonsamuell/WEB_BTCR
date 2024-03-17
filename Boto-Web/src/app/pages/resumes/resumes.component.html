@@ -1,0 +1,84 @@
+<div class="h-full flex justify-center">
+  <div class="h-full w-full flex items-center max-w-7xl px-6 py-14 lg:py-16">
+    <div class="w-full flex flex-col lg:flex-row justify-center gap-8 mx-auto lg:mx-0 lg:max-w-7xl">
+      <div class="relative h-fit max-h-[30rem] overflow-y-auto shadow-md rounded-2xl">
+        <table class="w-full max-w-[50rem] text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-900 bg-gray-50 uppercase border-b">
+            <tr>
+              <th scope="col" class="px-6 py-4">
+                Nome
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Link do Linkedin
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Tempo de Exp.
+              </th>
+              <th scope="col" class="px-6 py-4">
+                Escolaridade
+              </th>
+            </tr>
+          </thead>
+
+          <tbody *ngFor="let resume of resumes">
+            <tr class=" odd:bg-white even:bg-gray-50 border-b">
+              <th scope="row"
+                class="px-6 py-4 max-w-[28rem] font-medium text-gray-800 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                {{resume.nome}}
+              </th>
+              <td class="px-6 py-4 max-w-10 overflow-hidden overflow-ellipsis">
+                {{resume.linkedin}}
+              </td>
+              <td class="px-6 py-4">
+                {{transformMonthsInYears(resume.tempo)}}
+              </td>
+              <td class="px-6 py-4">
+                {{compareAcademicInformation(resume)}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="rounded-2xl p-8 bg-white flex flex-col">
+        <h1 class="text-center text-lg font-bold leading-7 text-gray-900">Escolha uma opção para filtrar</h1>
+
+        <div class="mt-2">
+          <h2 class="text-gray-900">Tempo de experiência</h2>
+
+          <ul class="w-48 text-sm font-medium text-gray-900 bg-white">
+            <li *ngFor="let option of timeFilter" class="w-full">
+              <div class="flex items-center ps-3">
+                <input id="time" type="radio" value="" name="radio-time"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                <label for="time" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.option}}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-2">
+          <h2 class="text-gray-900">Escolaridade</h2>
+
+          <ul class="w-48 text-sm font-medium text-gray-900 bg-white">
+            <li *ngFor="let option of educationFilter" class="w-full">
+              <div class="flex items-center ps-3">
+                <input id="education" type="radio" value="" name="radio-education"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                <label for="education"
+                  class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.option}}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <button type="submit"
+          class="mt-2 ml-auto rounded-md bg-indigo-600 px-5 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Filtrar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

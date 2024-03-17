@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js" integrity="sha512-ml/QKfG3+Yes6TwOzQb7aCNtJF4PUyha6R3w8pSTo/VJSywl7ZreYvvtUso7fKevpsI+pYVVwnu82YO0q3V6eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Adiciona alguns estilos para a página web -->
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="EXT_ORG.js" defer></script>
+
+    <title>Extrator de Texto de PDF</title>
+
+</head>
+<body>
+    
+    <h1>Extrator de Texto de PDF</h1>
+    <!-- Cria um contêiner div para o formulário de upload de arquivo e a seção de resultado -->
+    <div class="pdfwork">
+        <button class="another" onclick="location.reload()">Extrair Outro PDF</button><!-- Botão para extrair outro PDF (inicialmente oculto) -->
+        <span>Selecione o PDF</span><!-- Exibe o texto "Selecione o PDF" -->
+        <input type="file" class="selectpdf"><!-- Campo de input de arquivo para selecionar o arquivo PDF -->
+        <button class="upload">Upload</button><!-- Botão para fazer upload do PDF selecionado-->
+
+        <!-- Seção de resultado (inicialmente oculta) -->
+        <div class="afterupload">
+            <!-- Exibe o texto "Selecione a Página" -->
+            <span>Selecione a Página</span>
+            <!-- Menu suspenso para selecionar a página -->
+            <select class="selectpage" onchange="afterProcess()"></select>
+            <!-- Link de download para o arquivo de texto extraído do PDF -->
+            <a href="" class="download" download>Download do Texto PDF</a>
+            <!-- Área de texto para exibir o texto extraído -->
+            <textarea class="pdftext"></textarea>
+        </div>
+    </div>
+
+</body>
+</html>
+

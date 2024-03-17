@@ -1,0 +1,25 @@
+h1 {
+    width: 100%;
+    text-align: center;
+}
+        
+/* Define a exibição e o alinhamento para as seções principal e de resultado */
+.pdfwork, .afterupload {       
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.pdfwork * {
+    margin-top: 5px;
+}
+
+.afterupload {
+    display: none;
+}
+
+.another {
+    display: none;
+}
