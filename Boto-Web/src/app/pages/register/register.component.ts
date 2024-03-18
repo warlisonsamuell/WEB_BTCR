@@ -3,16 +3,15 @@ import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { AxiosService } from '../../../libs/axios.service';
 import { GetTextFromPDF } from '../../../utils/extractTextFromPDF';
-import {NgToastService} from 'ng-angular-popup'
+import { NgToastService } from 'ng-angular-popup';
 import { savePDFFile } from '../../../utils/savePDFfile';
 const padrao = /\(LinkedIn\)/;
 
 declare global {
   interface Window {
-    handleGlobalText: () => any
+    handleGlobalText: () => any;
   }
 }
-
 
 @Component({
   selector: 'app-register',
@@ -26,7 +25,10 @@ export class RegisterComponent {
   fullText = '';
   file: FileList | null = null;
 
-  constructor(private apiService: AxiosService, private toast: NgToastService) {}
+  constructor(
+    private apiService: AxiosService,
+    private toast: NgToastService
+  ) {}
 
   updateFile(event: any) {
     const file: FileList = event.target.files[0];
@@ -36,25 +38,31 @@ export class RegisterComponent {
   uploadData() {
     setTimeout(() => {
       window.handleGlobalText().then((resp: any) => {
-        if(!resp || !this.nome.value || !padrao.test(resp)){
-          console.log("file",this.file)
-          console.log("nome",this.nome.value)
-          this.toast.error({detail:"Error message", summary:"Nome ou PDF inválido", duration:3000, position:'topCenter'})
+        if (!resp || !this.nome.value || !padrao.test(resp)) {
+          console.log('file', this.file);
+          console.log('nome', this.nome.value);
+          this.toast.error({
+            detail: 'Error message',
+            summary: 'Nome ou PDF inválido',
+            duration: 3000,
+            position: 'topCenter',
+          });
           return;
         }
         this.apiService.post({
           nome: this.nome.value ?? '',
           fullText: resp,
         }),
-        this.toast.success({detail:"SUCCESS",summary:'PDF cadastrado com sucesso',duration:5000, position:'topCenter'});        
+          this.toast.success({
+            detail: 'SUCCESS',
+            summary: 'PDF cadastrado com sucesso',
+            duration: 5000,
+            position: 'topCenter',
+          });
       });
-    }, 3000),
-
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 8000);
-
+    }, 5000),
+      setTimeout(() => {
+        window.location.reload();
+      }, 8000);
   }
-
 }
