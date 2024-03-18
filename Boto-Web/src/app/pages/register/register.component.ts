@@ -5,7 +5,7 @@ import { AxiosService } from '../../../libs/axios.service';
 import { GetTextFromPDF } from '../../../utils/extractTextFromPDF';
 import {NgToastService} from 'ng-angular-popup'
 import { savePDFFile } from '../../../utils/savePDFfile';
-
+const padrao = /\(LinkedIn\)/;
 
 declare global {
   interface Window {
@@ -36,7 +36,7 @@ export class RegisterComponent {
   uploadData() {
     setTimeout(() => {
       window.handleGlobalText().then((resp: any) => {
-        if(!resp || !this.nome.value){
+        if(!resp || !this.nome.value || !padrao.test(resp)){
           console.log("file",this.file)
           console.log("nome",this.nome.value)
           this.toast.error({detail:"Error message", summary:"Nome ou PDF inválido", duration:3000, position:'topCenter'})
@@ -47,7 +47,6 @@ export class RegisterComponent {
           fullText: resp,
         }),
         this.toast.success({detail:"SUCCESS",summary:'PDF cadastrado com sucesso',duration:5000, position:'topCenter'});        
-        savePDFFile(this.nome.value, this.file)
       });
     }, 3000),
 
