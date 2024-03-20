@@ -20,6 +20,7 @@ declare global {
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
+
 export class RegisterComponent {
   nome = new FormControl('');
   fullText = '';
@@ -42,9 +43,9 @@ export class RegisterComponent {
           console.log('file', this.file);
           console.log('nome', this.nome.value);
           this.toast.error({
-            detail: 'Error message',
+            detail: 'Mensagem de erro',
             summary: 'Nome ou PDF inválido',
-            duration: 3000,
+            duration: 5000,
             position: 'topCenter',
           });
           return;
@@ -52,17 +53,50 @@ export class RegisterComponent {
         this.apiService.post({
           nome: this.nome.value ?? '',
           fullText: resp,
-        }),
-          this.toast.success({
-            detail: 'SUCCESS',
-            summary: 'PDF cadastrado com sucesso',
-            duration: 5000,
-            position: 'topCenter',
-          });
+        });
+        this.toast.success({
+          detail: 'SUCESSO',
+          summary: 'PDF cadastrado com sucesso',
+          duration: 5000,
+          position: 'topCenter',
+        });
       });
-    }, 5000),
-      setTimeout(() => {
-        window.location.reload();
-      }, 8000);
+    }, 2000);
+  
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
   }
+  
+
+  // uploadData() {
+  //   setTimeout(() => {
+  //     window.handleGlobalText().then((resp: any) => {
+  //       if (!resp || !this.nome.value || !padrao.test(resp)) {
+  //         console.log('file', this.file);
+  //         console.log('nome', this.nome.value);
+  //         this.toast.error({
+  //           detail: 'Error message',
+  //           summary: 'Nome ou PDF inválido',
+  //           duration: 5000,
+  //           position: 'topCenter',
+  //         });
+  //         return;
+  //       }
+  //       this.apiService.post({
+  //         nome: this.nome.value ?? '',q
+  //         fullText: resp,
+  //       }),
+  //         this.toast.success({
+  //           detail: 'SUCCESS',
+  //           summary: 'PDF cadastrado com sucesso',
+  //           duration: 5000,
+  //           position: 'topCenter',
+  //         });
+  //     });
+  //   }, 2000),
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 4000);
+  // }
 }

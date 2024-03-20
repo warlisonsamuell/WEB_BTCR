@@ -5,6 +5,8 @@ class PeopleController {
   index(request, response) {
     const tempoExp = parseInt(request.query.tempoExp);
     const escolaridade = request.query.escolaridade;
+    const idioma = request.query.idioma
+    const cidade = request.query.cidade
 
     const peopleController = new PeopleController();
 
@@ -15,131 +17,64 @@ class PeopleController {
     if (escolaridade) {
       params.escolaridade = escolaridade;
     }
+    if (idioma) {
+      params.idioma = idioma;
+    }
+    if (cidade) {
+      params.cidade = cidade;
+    }
 
     peopleController.getAll({ params }, response);
   }
 
+  
   getAll(request, response) {
-    let umAno = 12;
-    let tresAnos = 36;
-    let cincoAnos = 60;
-
     const tempoExp = parseInt(request.params.tempoExp);
     const escolaridade = request.params.escolaridade;
+    const idioma = request.params.idioma;
+    const cidade = request.params.cidade;
 
-    //////////////////////////////////////// CASO A PESSOA TENHA APENAS O TEMPO DE EXPERIENCIA /////////////////////////////////
-    if (tempoExp && !escolaridade) {
-      if (tempoExp == umAno) {
-        const query = `SELECT * FROM pessoa WHERE tempo <= ${umAno}`;
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp == tresAnos) {
-        const query = `SELECT * FROM pessoa WHERE tempo > ${umAno} AND tempo <= ${tresAnos}`;
+    let query = "SELECT * FROM pessoa WHERE 1=1";
 
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp == cincoAnos) {
-        const query = `SELECT * FROM pessoa WHERE tempo > ${tresAnos} AND tempo <= ${cincoAnos}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp > cincoAnos) {
-        const query = `SELECT * FROM pessoa WHERE tempo > ${cincoAnos}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      }
+    if (tempoExp) {
+        if (tempoExp === 12) {
+            query += " AND tempo <= 12";
+        } else if (tempoExp === 36) {
+            query += " AND tempo > 12 AND tempo <= 36";
+        } else if (tempoExp === 60) {
+            query += " AND tempo > 36 AND tempo <= 60";
+        } else if (tempoExp === 61) {
+            query += " AND tempo > 60";
+        }
     }
 
-    //////////////////////////////////////// CASO A PESSOA TENHA APENAS A ESCOLARIDADE/////////////////////////////////
-    if (escolaridade && !tempoExp) {
-      const query = `SELECT * FROM pessoa WHERE ${escolaridade} = '1'`;
+    if (escolaridade) {
+        query += ` AND ${escolaridade} = '1'`;
+    }
 
-      Connection.query(query, (err, result) => {
+    if (idioma) {
+        query += ` AND (${idioma} = 'English' OR ${idioma} = 'Espanhol')`;
+    }
+
+    if (cidade) {
+        query += ` AND cidade = '${cidade}'`;
+    }
+
+    Connection.query(query, (err, result) => {
         if (err) {
-          return response.status(500).send('Erro ao obter pessoas');
+            return response.status(500).send('Erro ao obter pessoas');
         }
         return response.json(result);
-      });
-      console.log('entrou');
-    }
-
-    //////////////////////////////////////// CASO A PESSOA  NÃO TENHA APENAS NADA (SEM PARAMETROS)/////////////////////////////////
-    if (!tempoExp && !escolaridade) {
-      const query = 'SELECT * FROM pessoa';
-
-      Connection.query(query, (err, result) => {
-        if (err) {
-          return response.status(500).send('Erro ao obter pessoas');
-        }
-        return response.json(result);
-      });
-    }
-    //////////////////////////////////////// CASO A PESSOA  TENHA ESCOLARIDADE E FORMAÇÃO/////////////////////////////////
-    if (tempoExp && escolaridade) {
-      if (tempoExp == umAno) {
-        const query = `SELECT * FROM pessoa WHERE ${escolaridade} = '1' AND tempo <= ${umAno}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp == tresAnos) {
-        const query = `SELECT * FROM pessoa WHERE ${escolaridade} = '1' and tempo > ${umAno} AND tempo <= ${tresAnos}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp == cincoAnos) {
-        const query = `SELECT * FROM pessoa WHERE ${escolaridade} = '1' and tempo > ${tresAnos} AND tempo <= ${cincoAnos}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      } else if (tempoExp > cincoAnos) {
-        const query = `SELECT * FROM pessoa WHERE ${escolaridade} = '1' AND tempo > ${cincoAnos}`;
-
-        Connection.query(query, (err, result) => {
-          if (err) {
-            return response.status(500).send('Erro ao obter pessoas');
-          }
-          return response.json(result);
-        });
-      }
-    }
-  }
+    });
+}
 
   create(request, response) {
     const { nome, fullText } = request.body;
-    const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn } =
+    const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade} =
       extractText(fullText);
-    const query = `INSERT INTO pessoa (nome, email, linkedin, tempo, ensinomedio, ensinosuperior, posgraduacao, mestrado, doutorado) 
+    const query = `INSERT INTO pessoa (nome, email, linkedin, tempo, ensinomedio, ensinosuperior, posgraduacao, mestrado, doutorado, english, nivelenglish, spanish, nivelspanish, cidade) 
     VALUES ('${nome}', '${email_verificado}', '${link_linkedIn}', '${tempo_experiencia}', '${escolaridade.ensinoMedio}', '${escolaridade.ensinoSuperior}',
-    '${escolaridade.posGraduacao}', '${escolaridade.mestrado}', '${escolaridade.doutorado}')`;
+    '${escolaridade.posGraduacao}', '${escolaridade.mestrado}', '${escolaridade.doutorado}', '${english_verificado}','${nivel_english}', '${spanish_verificado}','${nivel_spanish}','${cidade}')`;
 
     Connection.query(query, (err, result) => {
       if (err) {

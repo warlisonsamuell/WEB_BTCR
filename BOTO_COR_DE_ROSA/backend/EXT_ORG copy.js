@@ -178,6 +178,8 @@ async function extractText(url, textocompleto) {
       }
     }
 
+    manaus = acharTermo('')
+
     let sqlcomp = acharTermo('SQL');
     console.log(sqlcomp);
     let desThink = acharTermo('Design Think');

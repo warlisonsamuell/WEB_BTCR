@@ -4,6 +4,8 @@ import { AxiosService } from '../../../libs/axios.service';
 
 import { transformMonthsInYears } from '../../../utils/transformMonthsInYears';
 import { compareAcademicInformation } from '../../../utils/compareAcademicInformation';
+import {chamandoNivelIngles} from '../../../utils/chamandoNivelIngles';
+
 import {
   FormControl,
   FormGroup,
@@ -19,6 +21,14 @@ import {
   styleUrl: './resumes.component.css',
 })
 export class ResumesComponent {
+
+  cidadeFilter = [
+    {
+      name: 'Manaus',
+      option: 'Manaus'
+    },
+  ];
+
   timeFilter = [
     {
       name: '0 a 1 ano',
@@ -56,15 +66,30 @@ export class ResumesComponent {
     },
     {
       name: 'Doutorado',
-      option: 'doutorado',
+      option: 'doutorado'
     },
   ];
+  idiomaFilter = [
+    {
+      name: 'Inglês',
+      option: 'english'
+    },
+    {
+      name: 'Espanhol',
+      option: 'spanish '
+    }
+  ];
+
+  
   resumes: Resume[] = [];
 
   form = new FormGroup({
     tempoExp: new FormControl(''),
     escolaridade: new FormControl(''),
+    idioma: new FormControl(''),
+    cidade: new FormControl(''),
   });
+
 
   constructor(private apiService: AxiosService) {}
 
@@ -97,5 +122,13 @@ export class ResumesComponent {
 
   compareAcademicInformation(resume: Resume): string {
     return compareAcademicInformation(resume);
+  }
+
+  chamandoNivelIngles(resume: Resume): string {
+    return resume.nivelenglish;
+  }
+
+  chamandoNivelEspanhol(resume: Resume): string {
+    return resume.nivelspanish;
   }
 }

@@ -4,6 +4,7 @@ import api from './axios';
 interface Parametros {
   tempoExp: string;
   escolaridade: string;
+  idioma: string;
 }
 
 @Injectable({

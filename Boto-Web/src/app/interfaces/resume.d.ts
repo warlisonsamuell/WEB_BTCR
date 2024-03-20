@@ -1,4 +1,4 @@
-interface Resume {
+interface Resume{
   id: number;
   nome: string;
   email: string;
@@ -8,7 +8,10 @@ interface Resume {
   pais: string;
   tempo: number;
   ensinomedio: '1' | '0';
+  ensinosuperior: '1' | '0';
   posgraduacao: '1' | '0';
   mestrado: '1' | '0';
   doutorado: '1' | '0';
+  nivelenglish: string;
+  nivelspanish: string;
 }

@@ -26,6 +26,15 @@
   <script>
     let globalText = ''; // Variável global para armazenar o texto extraído do PDF
 
+//     function toggleRadio() {
+//     var radio = document.getElementById("meuRadio");
+//     if (radio.checked) {
+//         radio.checked = false;
+//     } else {
+//         radio.checked = true;
+//     }
+// }
+
     document.getElementById('extractButton').addEventListener('click', async () => {
       const fileInput = document.getElementById('pdfFileInput');
       const file = fileInput.files[0];
