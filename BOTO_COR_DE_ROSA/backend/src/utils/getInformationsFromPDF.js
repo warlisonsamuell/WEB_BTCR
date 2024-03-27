@@ -124,12 +124,12 @@ function extractText(textocompleto) {
     'Languages'
   );
 
-  // let competencias = extrairInformacaoEntreMarcadores(
-  //   textocompleto,
-  //   'Principais competências',
-  //   'Languages',
-  //   'Certifications',
-  // );
+  let competencias = extrairInformacaoEntreMarcadores(
+    textocompleto,
+    'Principais competências',
+    'Languages',
+    'Certifications',
+  );
 
   // mexi aqui
   let languages = extrairInformacaoEntreMarcadores(
@@ -139,19 +139,19 @@ function extractText(textocompleto) {
     'Resumo'
   ) || '';
 
-  // let certifications = extrairInformacaoEntreMarcadores(
-  //   textocompleto,
-  //   'Certifications',
-  //   'Resumo',
-  //   'Experiência',
-  // );
+  let certifications = extrairInformacaoEntreMarcadores(
+    textocompleto,
+    'Certifications',
+    'Resumo',
+    'Experiência',
+  );
 
-  // let resumo = extrairInformacaoEntreMarcadores(
-  //   textocompleto,
-  //   'Resumo',
-  //   'Experiência',
-  //   'Formação acadêmica',
-  // );
+  let resumo = extrairInformacaoEntreMarcadores(
+    textocompleto,
+    'Resumo',
+    'Experiência',
+    'Formação acadêmica',
+  );
 
   // let experiencias = extrairInformacaoEntreMarcadores(
   //   textocompleto,
@@ -278,8 +278,9 @@ function extractText(textocompleto) {
   // console.log(spanish)
   // console.log(spanish_verificado)
   // console.log(nivel_spanish)
-
-
+  console.log(competencias, "\n--------------------------------------------")
+  console.log(certifications, "\n--------------------------------------------")
+  console.log(resumo, "\n--------------------------------------------")
 
   function acharCidade(termo){
     textocompleto.indexOf(termo)
