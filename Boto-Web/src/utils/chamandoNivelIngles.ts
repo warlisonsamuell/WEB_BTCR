@@ -1,4 +1,5 @@
-export function chamandoNivelIngles(resume: Resume): String {
-  
-    return resume.nivelenglish
+export function chamandoNivelIngles(resume: Resume): string {
+
+    return resume.nivelenglish;
+
 }

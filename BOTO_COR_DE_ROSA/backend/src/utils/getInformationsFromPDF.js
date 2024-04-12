@@ -153,11 +153,11 @@ function extractText(textocompleto) {
     'Formação acadêmica',
   );
 
-  // let experiencias = extrairInformacaoEntreMarcadores(
-  //   textocompleto,
-  //   'Experiência',
-  //   'Formação acadêmica',
-  // );
+  let experiencias = extrairInformacaoEntreMarcadores(
+    textocompleto,
+    'Experiência',
+    'Formação acadêmica',
+  );
 
   
   //EXTRAINDO O TÓPICO FORMAÇÃO
@@ -199,28 +199,28 @@ function extractText(textocompleto) {
     }
   }else{
     spanish = null
-    english = null
+    english =   null
   }
  
-  console.log(english)
+  // console.log(english)
 
   if (english) {
     if ((english.includes('English')) || (english.includes('Inglês'))) {
       if(english.includes('English')){
         english_verificado = "English";
         nivel_english = english.substring(english.indexOf('English  (') + 'English  ('.length, english.indexOf(')'));
-        console.log(nivel_english);
+        // console.log(nivel_english);
 
       }else if (english.includes('Inglês')){
         ingles = languages.substring(languages.indexOf('Inglês  ('))
         english_verificado = "English";
         nivel_english = ingles.substring(ingles.indexOf('Inglês  (') + 'Inglês  ('.length, ingles.indexOf(')'));
-        console.log(nivel_english);
+        // console.log(nivel_english);
       }
       
       if (!nivel_english){
         nivel_english = english.substring(english.indexOf('Inglês  (') + 'Inglês  ('.length, english.indexOf(')'));
-        console.log(nivel_english);
+        // console.log(nivel_english);
       }
 
     }else {
@@ -234,7 +234,7 @@ function extractText(textocompleto) {
     if (spanish.includes("Espanhol")) {
       spanish_verificado = "Espanhol";
       nivel_spanish = spanish.substring(spanish.indexOf('Espanhol  (') + 'Espanhol  ('.length, spanish.indexOf(')'));
-      console.log(nivel_spanish);
+      // console.log(nivel_spanish);
     } else {
       spanish_verificado = null;
       nivel_spanish = null;
@@ -243,13 +243,13 @@ function extractText(textocompleto) {
   
   
   if ((!english) && (!spanish)){
-    english_verificado = null;
+    english_verificado = null
     nivel_english = null;
     spanish_verificado = null;
     nivel_spanish = null;
   }
   
-//////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
 
 
 
@@ -258,10 +258,20 @@ function extractText(textocompleto) {
 
   tempo_experiencia = extrairAnosMeses(tempo_experiencia);
 
+  function formadonao(text){
+    text = formacao.substring(formacao.indexOf('('), formacao.indexOf(')'));
+    let regex = /\b\d{4}\b/g;
+    let anos = text.match(regex);
+    let ultimoAno = anos[anos.length - 1];
+    // console.log(ultimoAno);
+  }
+  // console.log(formacao)
+  formadonao(formacao);
+
 
   // chamando a função para filtrar escolaridade
   const escolaridade = escolaridadeFilter(formacao);
-  console.log(escolaridade);
+  // console.log(escolaridade);
 
 
   // chamando a função para filtrar email pessoal e para verificar se ele existe, pois quando não tiver o email vai ter o linkedin
@@ -275,13 +285,10 @@ function extractText(textocompleto) {
       return email
     }
   };
-  // console.log(spanish)
-  // console.log(spanish_verificado)
-  // console.log(nivel_spanish)
-  console.log(competencias, "\n--------------------------------------------")
-  console.log(certifications, "\n--------------------------------------------")
-  console.log(resumo, "\n--------------------------------------------")
 
+
+
+  //função para ver se a pessoa é de Manaus ou não
   function acharCidade(termo){
     textocompleto.indexOf(termo)
     if (textocompleto.indexOf(termo) !== -1){
@@ -290,10 +297,31 @@ function extractText(textocompleto) {
       return null
     }
   }
-  cidade = acharCidade('Manaus, Amazonas, Brasil') || ''
+
+  cidade = acharCidade('Manaus, Amazonas, Brasil') || '';
 
 
-  return { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade};
+
+  //função para concatenar as informações para salvar no banco de dados em caso de filtragem
+  function concatenarInform(X, Y){
+    let concatenado = (X + Y).toUpperCase();
+    concatenadosemacento = concatenado.replace(/\s/g, '');
+    textofinal = removerAcentos(concatenadosemacento);
+    function removerAcentos(texto) {
+      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+    return textofinal
+  }
+
+  textoinfo = concatenarInform(competencias, resumo,certifications ,formacao)
+
+  let formacoes = formacao.replace(/Page \d+ of \d+/g, '');
+  let formacoesArray = formacoes.toUpperCase().split(/(?<=\))\b/);
+  
+  // console.log(formacoesArray)
+
+
+  return { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade, textoinfo};
 }
 
 module.exports = extractText;

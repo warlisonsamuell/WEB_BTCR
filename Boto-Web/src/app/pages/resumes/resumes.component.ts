@@ -84,6 +84,7 @@ export class ResumesComponent {
   resumes: Resume[] = [];
 
   form = new FormGroup({
+    termo: new FormControl(''),
     tempoExp: new FormControl(''),
     escolaridade: new FormControl(''),
     idioma: new FormControl(''),
@@ -131,4 +132,19 @@ export class ResumesComponent {
   chamandoNivelEspanhol(resume: Resume): string {
     return resume.nivelspanish;
   }
+
+  toggleRadio(formControlName: string, value: string) {
+    const formControl = this.form.get(formControlName);
+  
+    if (formControl) {
+      const currentValue = formControl.value;
+      if (currentValue === value) {
+        formControl.setValue('');
+      } else {
+        formControl.setValue(value);
+      }
+    }
+  }
+
+  
 }

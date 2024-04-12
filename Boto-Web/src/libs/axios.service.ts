@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import api from './axios';
 
 interface Parametros {
+  termo: string,
   tempoExp: string;
   escolaridade: string;
   idioma: string;

@@ -27,10 +27,26 @@
           </thead>
 
           <tbody *ngFor="let resume of resumes">
-            <tr class=" odd:bg-white even:bg-gray-50 border-b">
+
+            <!-- <div class="card-container">
+              <div class="card">
+                <div class="card-content">
+                  <h3 class="card-title">{{resume.nome}}</h3>
+                  <p class="card-text">
+                    <a href="https://{{resume.linkedin}}" target="_blank" rel="noopener noreferrer">{{resume.linkedin}}</a>
+                  </p>
+                  <p class="card-text">{{transformMonthsInYears(resume.tempo)}}</p>
+                  <p class="card-text">{{compareAcademicInformation(resume)}}</p>
+                  <p class="card-text">{{chamandoNivelIngles(resume)}}</p>
+                  <p class="card-text">{{chamandoNivelEspanhol(resume)}}</p>
+                </div>
+              </div>
+            </div> -->
+            
+            <tr class="row-info odd:bg-white even:bg-gray-50 border-b">
               <th scope="row"
                 class="px-6 py-4 max-w-[28rem] font-medium text-gray-800 overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {{resume.nome}}
+                {{resume.nome}} <br>
               </th>
               <td class="px-6 py-4 max-w-10 overflow-hidden overflow-ellipsis">
                 <a href="https://{{resume.linkedin}}" target="_blank" rel="noopener noreferrer">{{resume.linkedin}}</a>
@@ -48,12 +64,26 @@
                 {{ chamandoNivelEspanhol(resume) }}
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
 
-
       <div class="rounded-2xl p-8 bg-white flex flex-col">
+        <h1 class="text-center text-lg font-bold leading-7 text-gray-900">Filtre por um termo específico</h1>
+        
+        <div class="mt-2">
+        
+          <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
+            <label for="termo" class="block mb-1 text-sm font-medium text-gray-900">Pesquisar:</label>
+            <input type="text" formControlName="termo" id="termo" placeholder="Digite aqui para pesquisar" class="w-full px-3 py-2 mt-2 border-gray-300 rounded-md focus:outline-none focus:ring-blue-500">
+            <br>
+          </form>
+        </div>
+        <!-- <br> -->
+        <p>---------------------------------------------------</p>
+        <!-- <br> -->
+
         <h1 class="text-center text-lg font-bold leading-7 text-gray-900">Escolha uma opção para filtrar</h1>
 
         <div class="mt-2">
@@ -62,7 +92,8 @@
           <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
             <div *ngFor="let option of cidadeFilter" class="flex items-center ps-3">
               <input formControlName="cidade" type="radio" value="{{option.option}}" name="cidade"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                (click)="toggleRadio('cidade', option.option)">
               <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
             </div>
           </form>
@@ -74,19 +105,22 @@
           <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
             <div *ngFor="let option of timeFilter" class="flex items-center ps-3">
               <input formControlName="tempoExp" type="radio" value="{{option.option}}" name="tempoExp" 
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                (click)="toggleRadio('tempoExp', option.option)">
               <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
             </div>
           </form>
         </div>
 
+        
         <div class="mt-2">
           <h2 class="text-gray-900">Escolaridade</h2>
 
           <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
             <div *ngFor="let option of educationFilter" class="flex items-center ps-3">
               <input formControlName="escolaridade" type="radio" value="{{option.option}}" name="escolaridade"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                (click)="toggleRadio('escolaridade', option.option)">
               <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
             </div>
           </form>
@@ -98,9 +132,10 @@
 
           <form [formGroup]="form" class="w-48 text-sm font-medium text-gray-900 bg-white">
             <div *ngFor="let option of idiomaFilter" class="flex items-center ps-3">
-              <input formControlName="idioma" type="radio" value="{{option.option}}" name="idioma"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-              <label for="education" class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
+              <input formControlName="idioma" type="radio" [value]="option.option" name="idioma"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                (click)="toggleRadio('idioma', option.option)">
+              <label class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{option.name}}</label>
             </div>
           </form>
         </div>
