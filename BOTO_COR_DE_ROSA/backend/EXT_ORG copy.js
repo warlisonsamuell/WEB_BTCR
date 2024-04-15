@@ -12,22 +12,21 @@ async function extractText(url, textocompleto) {
 
     pdf = await pdfjsLib.getDocument(url).promise;
 
-    let pages = pdf.numPages; // Obtém o número total de páginas no PDF
+    let pages = pdf.numPages; 
 
     for (let i = 1; i <= pages; i++) {
-      let page = await pdf.getPage(i); // Obtém o objeto de página para cada página
-      let txt = await page.getTextContent(); // Obtém o conteúdo de texto da página
-      let text = txt.items.map((s) => s.str).join(''); // Concatena os itens de texto em uma única string
-      alltext.push(text); // Adiciona o texto extraído ao array
+      let page = await pdf.getPage(i); 
+      let txt = await page.getTextContent(); 
+      let text = txt.items.map((s) => s.str).join('');
+      alltext.push(text);
 
       textocompleto = textocompleto + text;
     }
 
     alltext.map((e, i) => {
-      select.innerHTML += `<option value="${i + 1}">${i + 1}</option>`; // Adiciona opções para cada página no menu suspenso de seleção de página
+      select.innerHTML += `<option value="${i + 1}">${i + 1}</option>`;
     });
-
-    //extrairInformacaoEntreMarcadores("Resumo", "Experiência", "Formação acadêmica");
+    
     function extrairInformacaoEntreMarcadores(
       marcadorInicial,
       marcadorFinal,
@@ -37,7 +36,6 @@ async function extractText(url, textocompleto) {
       var fimIndex = textocompleto.indexOf(marcadorFinal);
       let istrue = true;
 
-      // Certifique-se de que o marcador inicial existe no textocompleto
       if (inicioIndex !== -1 && fimIndex !== -1) {
         var fimIndex = textocompleto.indexOf(
           marcadorFinal,
@@ -138,7 +136,6 @@ async function extractText(url, textocompleto) {
       }
     }
 
-    // Exemplo de chamada da função
     if (textocompleto.indexOf('Experiência') !== -1) {
       console.log(
         'tempo de experiencia:' + extrairAnosMeses(timexp) + ' meses',
@@ -283,7 +280,7 @@ async function extractText(url, textocompleto) {
     formacao_info.push(doutorado);
     console.log(formacao_info);
 
-    afterProcess(); // Exibe a seção de resultado
+    afterProcess();
   } catch (err) {
     alert(err.message);
   }

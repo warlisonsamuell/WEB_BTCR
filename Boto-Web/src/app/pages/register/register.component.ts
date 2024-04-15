@@ -5,6 +5,8 @@ import { AxiosService } from '../../../libs/axios.service';
 import { GetTextFromPDF } from '../../../utils/extractTextFromPDF';
 import { NgToastService } from 'ng-angular-popup';
 import { savePDFFile } from '../../../utils/savePDFfile';
+
+
 const padrao = /\(LinkedIn\)/;
 
 declare global {
@@ -28,14 +30,17 @@ export class RegisterComponent {
 
   constructor(
     private apiService: AxiosService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    // public error: any
   ) {}
 
   updateFile(event: any) {
     const file: FileList = event.target.files[0];
     this.file = file;
-  }
 
+  };
+
+  
   uploadData() {
     setTimeout(() => {
       window.handleGlobalText().then((resp: any) => {
@@ -62,10 +67,12 @@ export class RegisterComponent {
         });
       });
     }, 2000);
+    
   
     setTimeout(() => {
       window.location.reload();
     }, 4000);
   }
-
+  
+  
 }

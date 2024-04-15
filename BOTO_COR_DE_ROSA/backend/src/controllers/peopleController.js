@@ -50,7 +50,6 @@ class PeopleController {
   
   getAll(request, response) {
     const termo = request.params.termo;
-
     const tempoExp = parseInt(request.params.tempoExp);
     const escolaridade = request.params.escolaridade;
     const idioma = request.params.idioma;
@@ -106,24 +105,28 @@ class PeopleController {
     }
 
     
-}
+  }
+
+
 
   create(request, response) {
-    const { nome, fullText } = request.body;
-    const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade, textoinfo} =
-      extractText(fullText);
-    const query = `INSERT INTO pessoa (nome, email, linkedin, tempo, ensinomedio, ensinosuperior, posgraduacao, mestrado, doutorado, english, nivelenglish, spanish, nivelspanish, cidade, textoinfo) 
-    VALUES ('${nome}', '${email_verificado}', '${link_linkedIn}', '${tempo_experiencia}', '${escolaridade.ensinoMedio}', '${escolaridade.ensinoSuperior}',
-    '${escolaridade.posGraduacao}', '${escolaridade.mestrado}', '${escolaridade.doutorado}', '${english_verificado}','${nivel_english}', '${spanish_verificado}','${nivel_spanish}','${cidade}','${textoinfo}')`;
+      const { nome, fullText } = request.body;
+      const { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade, textoinfo} =
+        extractText(fullText);
+      const query = `INSERT INTO pessoa (nome, email, linkedin, tempo, ensinomedio, ensinosuperior, posgraduacao, mestrado, doutorado, english, nivelenglish, spanish, nivelspanish, cidade, textoinfo) 
+      VALUES ('${nome}', '${email_verificado}', '${link_linkedIn}', '${tempo_experiencia}', '${escolaridade.ensinoMedio}', '${escolaridade.ensinoSuperior}',
+      '${escolaridade.posGraduacao}', '${escolaridade.mestrado}', '${escolaridade.doutorado}', '${english_verificado}','${nivel_english}', '${spanish_verificado}','${nivel_spanish}','${cidade}','${textoinfo}')`;
 
-    Connection.query(query, (err, result) => {
-      if (err) {
-        response.status(500).send('Erro ao obter alunos');
-      }
-      response.status(203);
-    });
-    return response.json('ok');
+      Connection.query(query, (err, result) => {
+        if (err) {
+          console.error('Erro ao inserir pessoa:', err);
+          response.status(500).json({ error: 'Erro ao inserir pessoa' });
+          return;
+        }
+        response.status(203).json({ message: 'Pessoa inserida com sucesso' });
+      });
   }
+
 }
 
 module.exports = PeopleController;

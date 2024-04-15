@@ -4,7 +4,7 @@ import { ResumesComponent } from './pages/resumes/resumes.component';
 import { StartComponent } from './pages/start/start.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/start', pathMatch: 'full' }, //, pathMatch: 'full' 
+  { path: '', redirectTo: '/start', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent, title: 'Cadastrar' },
   { path: 'resumes', component: ResumesComponent },
   { path: 'start', component: StartComponent }

@@ -35,21 +35,20 @@ function extrairInformacaoEntreMarcadores(textocompleto, marcadorInicial, marcad
   let fimIndex = textocompleto.indexOf(marcadorFinal);
   let fimIndex2 = textocompleto.indexOf(reserva1);
 
-  // Certifique-se de que o marcador inicial e o marcador final existam
   if (inicioIndex !== -1 && fimIndex !== -1) {
     let informacaoEntreMarcadores = textocompleto.substring(inicioIndex + marcadorInicial.length, fimIndex).trim();
     return informacaoEntreMarcadores
 
-  } // Certifique-se de que o marcador inicial  e o marcador final 2 existam
+  } 
   else if (inicioIndex !== -1 && fimIndex2 !== -1) {
     let informacaoEntreMarcadores = textocompleto.substring(inicioIndex + marcadorInicial.length, fimIndex2).trim();
     return informacaoEntreMarcadores
       
-  }// Certifique-se de que o marcador inicial exista
+  }
   else if (inicioIndex == -1) {
     let informacaoEntreMarcadores = null;
     return informacaoEntreMarcadores;
-  } // Caso não entre em nenhuma acima, salvará como null
+  } 
   else {
     let informacaoEntreMarcadores = null;
     return informacaoEntreMarcadores;
@@ -116,7 +115,7 @@ function escolaridadeFilter(FORMACAO) {
 
 //FUNÇÃO QUE EXTRAI A INFORMAÇÃO DE CADA TÓPICO CHAMANDO A FUNÇÃO extrairInformacaoEntreMarcadores() LÁ DE CIMA
 function extractText(textocompleto) {
-  // Dados extraidos
+
   let contato = extrairInformacaoEntreMarcadores(
     textocompleto,
     'Contato',
@@ -258,15 +257,21 @@ function extractText(textocompleto) {
 
   tempo_experiencia = extrairAnosMeses(tempo_experiencia);
 
-  function formadonao(text){
-    text = formacao.substring(formacao.indexOf('('), formacao.indexOf(')'));
-    let regex = /\b\d{4}\b/g;
-    let anos = text.match(regex);
-    let ultimoAno = anos[anos.length - 1];
-    // console.log(ultimoAno);
-  }
-  // console.log(formacao)
-  formadonao(formacao);
+  // function formadonao(text){
+  //   text = formacao.substring(formacao.indexOf('('), formacao.indexOf(')'));
+  //   let regex = /\b\d{4}\b/g;
+  //   let anos = text.match(regex);
+  //   let ultimoAno = anos[anos.length - 1];
+  //   console.log("ano",ultimoAno);
+  //   if (ultimoAno >= anos){
+  //     return 0
+  //   }else{
+  //     return 1
+  //   }
+  // }
+  // formacao = formadonao(formacao);
+
+
 
 
   // chamando a função para filtrar escolaridade
@@ -303,22 +308,21 @@ function extractText(textocompleto) {
 
 
   //função para concatenar as informações para salvar no banco de dados em caso de filtragem
-  function concatenarInform(X, Y){
-    let concatenado = (X + Y).toUpperCase();
-    concatenadosemacento = concatenado.replace(/\s/g, '');
-    textofinal = removerAcentos(concatenadosemacento);
+  function concatenarInform(X, Y, W, L) {
+    let concatenado = (X + Y + W + L).toUpperCase();
+    let concatenadoSemEspacos = concatenado.replace(/[\s'"]/g,'');
+    let textofinal = removerAcentos(concatenadoSemEspacos);
+
     function removerAcentos(texto) {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
-    return textofinal
+
+    return textofinal;
   }
 
-  textoinfo = concatenarInform(competencias, resumo,certifications ,formacao)
-
-  let formacoes = formacao.replace(/Page \d+ of \d+/g, '');
-  let formacoesArray = formacoes.toUpperCase().split(/(?<=\))\b/);
+  let textoinfo = concatenarInform(competencias, resumo, certifications, formacao);
+  console.log(textoinfo);
   
-  // console.log(formacoesArray)
 
 
   return { email_verificado, tempo_experiencia, escolaridade, link_linkedIn, english_verificado, nivel_english, spanish_verificado, nivel_spanish, cidade, textoinfo};

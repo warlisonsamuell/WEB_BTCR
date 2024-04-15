@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- To be Added  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"
     integrity="sha512-ml/QKfG3+Yes6TwOzQb7aCNtJF4PUyha6R3w8pSTo/VJSywl7ZreYvvtUso7fKevpsI+pYVVwnu82YO0q3V6eg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Adiciona alguns estilos para a página web -->
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
@@ -24,16 +24,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
   <script>
-    let globalText = ''; // Variável global para armazenar o texto extraído do PDF
-
-//     function toggleRadio() {
-//     var radio = document.getElementById("meuRadio");
-//     if (radio.checked) {
-//         radio.checked = false;
-//     } else {
-//         radio.checked = true;
-//     }
-// }
+    let globalText = '';
 
     document.getElementById('extractButton').addEventListener('click', async () => {
       const fileInput = document.getElementById('pdfFileInput');
@@ -51,8 +42,8 @@
             text += item.str + ' ';
           });
         }
-        globalText = text; // Atualiza a variável global com o texto extraído
-        handleGlobalText(); // Chama a função que depende de globalText
+        globalText = text; 
+        handleGlobalText();
       };
       reader.readAsArrayBuffer(file);
     });
@@ -61,7 +52,6 @@
       return globalText
     }
 
-    // Exporta globalText para ser usado em outros arquivos
     window.handleGlobalText = handleGlobalText;
 
   </script>
