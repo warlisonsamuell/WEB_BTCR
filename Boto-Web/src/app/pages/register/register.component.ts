@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
-
 import { AxiosService } from '../../../libs/axios.service';
-import { GetTextFromPDF } from '../../../utils/extractTextFromPDF';
 import { NgToastService } from 'ng-angular-popup';
-import { savePDFFile } from '../../../utils/savePDFfile';
 
 
 const padrao = /\(LinkedIn\)/;
