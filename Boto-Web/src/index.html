@@ -27,8 +27,11 @@
     let globalText = '';
 
     document.getElementById('extractButton').addEventListener('click', async () => {
+      
       const fileInput = document.getElementById('pdfFileInput');
       const file = fileInput.files[0];
+      console.log(file);
+      console.log(globalText)
 
       const reader = new FileReader();
       reader.onload = async function (event) {
@@ -44,6 +47,10 @@
         }
         globalText = text; 
         handleGlobalText();
+        console.log(file);
+        console.log(globalText)
+
+
       };
       reader.readAsArrayBuffer(file);
     });
@@ -53,6 +60,10 @@
     }
 
     window.handleGlobalText = handleGlobalText;
+
+    setTimeout(() => {
+      fileInput.value=null;
+    }, 4000);
 
   </script>
 </body>

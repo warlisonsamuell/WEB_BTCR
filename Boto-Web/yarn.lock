@@ -5017,10 +5017,30 @@ path2d-polyfill@^2.0.1:
   resolved "https://registry.npmjs.org/path2d-polyfill/-/path2d-polyfill-2.0.1.tgz"
   integrity sha512-ad/3bsalbbWhmBo0D6FZ4RNMwsLsPpL6gnvhuSaU5Vm7b06Kr5ubSltQQ0T7YKsiJQO+g22zJ4dJKNTXIyOXtA==
 
-pdfjs-dist@^4.0.379:
-  version "4.0.379"
-  resolved "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-4.0.379.tgz"
-  integrity sha512-6H0Gv1nna+wmrr3CakaKlZ4rbrL8hvGIFAgg4YcoFuGC0HC4B2DVjXEGTFjJEjLlf8nYi3C3/MYRcM5bNx0elA==
+path2d@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/path2d/-/path2d-0.1.2.tgz"
+  integrity sha512-LW++2uxgHNL/FANhgGTPo/yDDQcgsVbKotwIVbpTgTBgRlKUpjOpjp3s3+KjG4OWCQ/r6z+WLDljH1/fC03PWw==
+
+pdf-text-reader@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/pdf-text-reader/-/pdf-text-reader-4.0.1.tgz"
+  integrity sha512-AuXTpAnZORgq6c1CblRZ6j+X6GTV1ap8iDmOd4koefXwCzqdzJjmRkXUVpuAxHdHjYji2j4kN98vJvK5PJE3PA==
+  dependencies:
+    pdfjs-dist "3.9.179"
+
+pdfjs-dist@^4.1.392:
+  version "4.1.392"
+  resolved "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-4.1.392.tgz"
+  integrity sha512-fUV14+CG81uDLjgZ2Nmy35GvJsLIekotJb2VhXAoUfMCrWHhQtPJbqryUuevAdSHyEiAdr675ULikoD087+lMg==
+  optionalDependencies:
+    canvas "^2.11.2"
+    path2d "^0.1.2"
+
+pdfjs-dist@3.9.179:
+  version "3.9.179"
+  resolved "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-3.9.179.tgz"
+  integrity sha512-AZBEIAORYDaOAlM0/A4Zg465+XF3ugYDdgrVmioVvNW5tH3xs3RpGFBYOG5PM9/vLM3M/wNncsMLTgyIKdqMKg==
   optionalDependencies:
     canvas "^2.11.2"
     path2d-polyfill "^2.0.1"
